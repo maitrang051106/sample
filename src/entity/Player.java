@@ -15,7 +15,7 @@ public class Player extends Entity{
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp,KeyHandler keyH){
         this.gp = gp;
@@ -101,6 +101,10 @@ public class Player extends Entity{
                     break;
             }
         }
+        else
+        {
+            System.out.println("update player pos: " + worldX/gp.tileSize + ", " + worldY/gp.tileSize);
+        }
         spriteCounter++;
         if(spriteCounter > 12){
             spriteNum = (spriteNum == 1) ? 2 : 1;
@@ -115,23 +119,34 @@ public class Player extends Entity{
             String objectName = gp.obj[i].name;
             switch(objectName){
                 case "Key":
+                    gp.playSE(1);
                     hasKey++;
                     gp.obj[i] = null;
-                    System.out.println("You got a key! Keys in inventory: " + hasKey);
+                    gp.ui.showMessage("You got a key!");
                     break;
                 case "Door":
                     if(hasKey > 0){
+                        gp.playSE(3);
                         hasKey--;
                         gp.obj[i] = null;
-                        System.out.println("You opened the door! Keys left: " + hasKey);
+                        gp.ui.showMessage("You opened the door!");
                     }
                     else{
-                        System.out.println("You need a key to open this door.");
+                        gp.ui.showMessage("You need a key to open this door.");
                     }
                     break;
                 case "Chest":
-                    System.out.println("You found a treasure chest! Congratulations!");
+                    gp.playSE(3);
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
                     break;
+                case "Boots":
+                    gp.playSE(2);
+                    speed += 2;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("You got boots! Speed increased to " + speed);
+                    break;
+
             }
         }
     }

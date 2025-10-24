@@ -16,7 +16,7 @@ public class TileManager {
         tile = new Tile[38]; // Example size
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/resources/maps.txt");
+        loadMap("/resources/maps/dungeon01.txt");
     }
     public void getTileImage(){
         try {
