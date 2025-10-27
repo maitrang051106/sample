@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import main.UtilityTool;
 public class TileManager {
 
     GamePanel gp;
@@ -23,6 +24,7 @@ public class TileManager {
             for (int i = 0; i < tile.length; i++) { 
                 tile[i] = new Tile();
                 tile[i].image = ImageIO.read(getClass().getResourceAsStream("/resources/tiles/" + String.format("%03d", i) + ".png"));
+                tile[i].image = UtilityTool.scaleImage(tile[i].image, gp.tileSize, gp.tileSize);
                 if(i > 15  && i != 17){
                     tile[i].collision = true;
                 }
